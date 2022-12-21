@@ -4,8 +4,14 @@ local Me = Players.LocalPlayer
 local sock
 if WebSocket then
 sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
+sock.OnClose:Connect(function()
+sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
+end)
 	else
  sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
+sock.OnClose:Connect(function()
+sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
+end)
 end
 
 function stringtocolor(str)
