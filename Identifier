@@ -8,6 +8,7 @@ repeat task.wait(30)
 pcall(function() WebSocket:Disconnect() end)
 sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
 sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":Joined")
+until false
 end)
 end)
 	else
