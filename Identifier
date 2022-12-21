@@ -1,0 +1,60 @@
+while not game:IsLoaded() do task.wait() end
+local Players = game:GetService("Players")
+local Me = Players.LocalPlayer
+local sock
+if WebSocket then
+	WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
+	else
+ sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
+end
+
+function stringtocolor(str)
+ return Color3.new(table.unpack(str:gsub(" ",""):split(",")))
+end
+
+repeat task.wait() until Me.Character:FindFirstChild("Head")
+Me.Character.Head:WaitForChild("NameGui")
+pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
+local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
+ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
+ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
+ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
+ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
+sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":Joined")
+    
+Me.CharacterAdded:Connect(function()
+    repeat task.wait() until Me.Character:FindFirstChild("Head")
+    Me.Character.Head:WaitForChild("NameGui")
+    pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
+    local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
+    ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
+    ExploiterGui.Name = "ExploiterGui"
+    ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+    ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
+    ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
+    ExploiterGui.Frame.NameSlot.TextStrokeColor3 = MyStroke
+    sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke))
+end)
+
+sock.OnMessage:Connect(function(data)
+    local data = data:split(":")
+    if Players:FindFirstChild(data[1]) then
+        if data[1] ~= Me.Name then
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character:FindFirstChild("Head")
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui")
+        pcall(function()Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
+        local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
+        ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
+        ExploiterGui.Name = "ExploiterGui"
+        ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+        ExploiterGui.Frame.NameSlot.Text = data[2]
+        ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
+        ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
+        if data[5] then
+            sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke))
+            end
+        end
+        end
+    end)
