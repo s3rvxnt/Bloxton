@@ -17,6 +17,7 @@ Me.Character.Head:WaitForChild("NameGui")
 pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
 local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
 ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
+ExploiterGui.Name = "ExploiterGui"
 ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
 ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
 ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
