@@ -18,7 +18,7 @@ function stringtocolor(str)
  return Color3.new(table.unpack(str:gsub(" ",""):split(",")))
 end
 
-repeat task.wait() until Me.Character:FindFirstChild("Head")
+repeat task.wait() Me.Character:FindFirstChild("Head")
 Me.Character.Head:WaitForChild("NameGui")
 pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
 local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
