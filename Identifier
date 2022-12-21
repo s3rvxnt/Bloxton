@@ -23,6 +23,9 @@ ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
 ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
 ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
 ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
+if getgenv().RichText = true then
+ExploiterGui.Frame.NameSlot.TextScaled = false
+end
 sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText)..":Joined")
     
 Me.CharacterAdded:Connect(function()
@@ -38,6 +41,9 @@ Me.CharacterAdded:Connect(function()
     ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
     ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
     ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
+    if getgenv().RichText = true then
+    ExploiterGui.Frame.NameSlot.TextScaled = false
+    end
     sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke))
 end
 end)
@@ -60,6 +66,7 @@ sock.OnMessage:Connect(function(data)
         ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
 	if data[5] == "true" then
 	ExploiterGui.Frame.NameSlot.RichText = data[5]
+	ExploiterGui.Frame.NameSlot.TextScaled = false
 	end
         if data[6] then
             sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke))
