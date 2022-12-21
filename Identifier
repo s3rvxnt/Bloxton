@@ -3,7 +3,7 @@ local Players = game:GetService("Players")
 local Me = Players.LocalPlayer
 local sock
 if WebSocket then
-	WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
+sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
 	else
  sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
 end
