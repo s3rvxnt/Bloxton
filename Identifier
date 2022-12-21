@@ -52,7 +52,7 @@ sock.OnMessage:Connect(function(data)
         if data[1] ~= Me.Name then
         repeat task.wait() until Players:FindFirstChild(data[1]).Character
         repeat task.wait() until Players:FindFirstChild(data[1]).Character:FindFirstChild("Head")
-        repeat task.wait() until layers:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui")
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui")
 	if not Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("ExploiterGui") then
         pcall(function()Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
         local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
