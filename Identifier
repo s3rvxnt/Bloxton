@@ -22,7 +22,8 @@ ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
 ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
 ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
 ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
-sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":Joined")
+ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
+sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText)..":Joined")
     
 Me.CharacterAdded:Connect(function()
     repeat task.wait() until Me.Character:FindFirstChild("Head")
@@ -35,7 +36,8 @@ Me.CharacterAdded:Connect(function()
     ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
     ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
     ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
-    ExploiterGui.Frame.NameSlot.TextStrokeColor3 = MyStroke
+    ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
+    ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
     sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke))
 end
 end)
@@ -56,7 +58,10 @@ sock.OnMessage:Connect(function(data)
         ExploiterGui.Frame.NameSlot.Text = data[2]
         ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
         ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
-        if data[5] then
+	if data[5] == "true" then
+	ExploiterGui.Frame.NameSlot.RichText = data[5]
+	end
+        if data[6] then
             sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke))
             end
         end
