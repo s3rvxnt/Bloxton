@@ -3,7 +3,13 @@ local Players = game:GetService("Players")
 local Me = Players.LocalPlayer
 local sock
 if WebSocket then
+task.spawn(function()
+repeat task.wait(30)
+pcall(function() WebSocket:Disconnect() end)
 sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
+sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":Joined")
+end)
+end)
 	else
  sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
 end
@@ -28,6 +34,7 @@ Me.CharacterAdded:Connect(function()
     repeat task.wait() until Me.Character:FindFirstChild("Head")
     Me.Character.Head:WaitForChild("NameGui")
     pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
+    if not Me.Character.Head:FindFirstChild("ExploiterGui") then
     local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
     ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
     ExploiterGui.Name = "ExploiterGui"
@@ -36,6 +43,7 @@ Me.CharacterAdded:Connect(function()
     ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
     ExploiterGui.Frame.NameSlot.TextStrokeColor3 = MyStroke
     sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke))
+end
 end)
 
 sock.OnMessage:Connect(function(data)
@@ -44,7 +52,8 @@ sock.OnMessage:Connect(function(data)
         if data[1] ~= Me.Name then
         repeat task.wait() until Players:FindFirstChild(data[1]).Character
         repeat task.wait() until Players:FindFirstChild(data[1]).Character:FindFirstChild("Head")
-        repeat task.wait() until Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui")
+        repeat task.wait() until pcall:FindFirstChild("NameGui")
+	if not Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("ExploiterGui") then
         pcall(function()Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
         local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
         ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
@@ -57,5 +66,6 @@ sock.OnMessage:Connect(function(data)
             sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke))
             end
         end
+	end
         end
     end)
