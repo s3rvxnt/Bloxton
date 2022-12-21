@@ -10,7 +10,6 @@ sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
 sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":Joined")
 until false
 end)
-end)
 	else
  sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
 end
