@@ -3,13 +3,7 @@ local Players = game:GetService("Players")
 local Me = Players.LocalPlayer
 local sock
 if WebSocket then
-task.spawn(function()
-repeat task.wait(30)
-pcall(function() WebSocket:Disconnect() end)
 sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
-sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":Joined")
-until false
-end)
 	else
  sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
 end
