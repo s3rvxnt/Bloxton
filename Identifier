@@ -25,6 +25,7 @@ function stringtocolor(str)
  return Color3.new(table.unpack(str:gsub(" ",""):split(",")))
 end
 
+repeat task.wait() until Me.Character
 repeat task.wait() until Me.Character:FindFirstChild("Head")
 Me.Character.Head:WaitForChild("NameGui")
 pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
