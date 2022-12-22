@@ -10,13 +10,7 @@ end)
 	elseif WebsocketClient then
 sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
 sock:Connect()
-local OldIndex = nil
-OldIndex = hookmetamethod(game, "__index", function(Self, Key)
-    if not checkcaller() and Self == sock and Key == "OnMessage" then
-        return sock.DataReceived
-    end
-    return OldIndex(Self, Key)
-end)
+sock.OnMessage = sock.DataReceived
 sock.ConnectionClosed:Connect(function()
 sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
 sock:Connect()
