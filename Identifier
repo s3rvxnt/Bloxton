@@ -17,7 +17,7 @@ OldIndex = hookmetamethod(game, "__index", function(Self, Key)
     return OldIndex(Self, Key)
 end)
 sock.ConnectClosed:Connect(function()
-sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
+sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co",false)
 end)
 	else
  sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
