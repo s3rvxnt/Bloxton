@@ -1,3 +1,4 @@
+local AuthStrings = {"3e75e249a9b6c1e39792d29efc319a4176e1aa424338ba394594b15d3e3bc9b7","9174f4abb00d8f5be79f1b7ee1bdfe651784d5771e2fad7b5b0af68a631f1741","e1a1aae2ec9c39ba32134ad8befe98ee0a31dfaac735eb29e78767956ea30ee1","bd97176919703bf0ab57b3751a1127d5fa0080e322099ccf8b35cb37b0a39145"}
 while not game:IsLoaded() do task.wait() end
 local Players = game:GetService("Players")
 local Me = Players.LocalPlayer
@@ -32,13 +33,18 @@ pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destr
 local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
 ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
 ExploiterGui.Name = "ExploiterGui"
-ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+ExploiterGui.StudsOffset = Vector3.new(0, 1.9, 0)
 ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
 ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
 ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
 ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
+if table.find(AuthStrings, getgenv().PrivateKey) then
+local VerifiedGui = ExploiterGui:Clone()
+VerifiedGui.Name = "VerifiedGui"
+VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
+end
 
-sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText)..":Joined")
+sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().PrivateKey)..":"..tostring(getgenv().RichText)..":Joined")
     
 Me.CharacterAdded:Connect(function()
     repeat task.wait() until Me.Character:FindFirstChild("Head")
@@ -48,15 +54,18 @@ Me.CharacterAdded:Connect(function()
     local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
     ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
     ExploiterGui.Name = "ExploiterGui"
-    ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+    ExploiterGui.StudsOffset = Vector3.new(0, 1.9, 0)
     ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
     ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
     ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
     ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
-    if getgenv().RichText == true then
-
+    if table.find(AuthStrings, getgenv().PrivateKey) then
+	local VerifiedGui = ExploiterGui:Clone()
+	VerifiedGui.Name = "VerifiedGui"
+	VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
+	VerifiedGui.Frame.NameSlot.Size = Vector3.new({1, 0}, {0.170000002, 0})
     end
-    sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText))
+    sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().PrivateKey)..":"..tostring(getgenv().RichText))
 end
 end)
 if WebsocketClient then
@@ -72,16 +81,21 @@ sock.DataReceived:Connect(function(data)
         local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
         ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
         ExploiterGui.Name = "ExploiterGui"
-        ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+        ExploiterGui.StudsOffset = Vector3.new(0,1.9,0)
         ExploiterGui.Frame.NameSlot.Text = data[2]
         ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
         ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
-	if data[5] == "true" then
-	ExploiterGui.Frame.NameSlot.RichText = data[5]
-
+	if table.find(AuthStrings, data[5]) then
+		local VerifiedGui = ExploiterGui:Clone()
+		VerifiedGui.Name = "VerifiedGui"
+		VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
+		VerifiedGui.Frame.NameSlot.Size = Vector3.new({1, 0}, {0.170000002, 0})
+    	end
+	if data[6] == "true" then
+	ExploiterGui.Frame.NameSlot.RichText = data[6]
 	end
-        if data[6] then
-            sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText))
+        if data[7] then
+            sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().PrivateKey)..":"..tostring(getgenv().RichText))
             end
         end
 	end
@@ -89,7 +103,7 @@ sock.DataReceived:Connect(function(data)
     end)
     else
 sock.OnMessage:Connect(function(data)
-    local data = data:split(":")
+       local data = data:split(":")
     if Players:FindFirstChild(data[1]) then
         if data[1] ~= Me.Name then
         repeat task.wait() until Players:FindFirstChild(data[1]).Character
@@ -100,16 +114,21 @@ sock.OnMessage:Connect(function(data)
         local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
         ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
         ExploiterGui.Name = "ExploiterGui"
-        ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+        ExploiterGui.StudsOffset = Vector3.new(0,1.9,0)
         ExploiterGui.Frame.NameSlot.Text = data[2]
         ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
         ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
-	if data[5] == "true" then
-	ExploiterGui.Frame.NameSlot.RichText = data[5]
-
+	if table.find(AuthStrings, data[5]) then
+		local VerifiedGui = ExploiterGui:Clone()
+		VerifiedGui.Name = "VerifiedGui"
+		VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
+		VerifiedGui.Frame.NameSlot.Size = Vector3.new({1, 0}, {0.170000002, 0})
+    	end
+	if data[6] == "true" then
+	ExploiterGui.Frame.NameSlot.RichText = data[6]
 	end
-        if data[6] then
-            sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText))
+        if data[7] then
+            sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().PrivateKey)..":"..tostring(getgenv().RichText))
             end
         end
 	end
