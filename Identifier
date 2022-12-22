@@ -8,7 +8,7 @@ sock.OnClose:Connect(function()
 sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
 end)
 	elseif WebsocketClient then
-sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co",false)
+sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
 local OldIndex = nil
 OldIndex = hookmetamethod(game, "__index", function(Self, Key)
     if not checkcaller() and Self == sock and Key == "OnMessage" then
@@ -17,7 +17,7 @@ OldIndex = hookmetamethod(game, "__index", function(Self, Key)
     return OldIndex(Self, Key)
 end)
 sock.ConnectClosed:Connect(function()
-sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co",false)
+sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
 end)
 	else
  sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
