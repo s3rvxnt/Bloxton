@@ -10,7 +10,6 @@ end)
 	elseif WebsocketClient then
 sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
 sock:Connect()
-sock.OnMessage = sock.DataReceived
 sock.ConnectionClosed:Connect(function()
 sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
 sock:Connect()
@@ -59,7 +58,35 @@ Me.CharacterAdded:Connect(function()
     sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText))
 end
 end)
+if WebsocketClient then
+sock.DataReceived:Connect(function(data)
+    local data = data:split(":")
+    if Players:FindFirstChild(data[1]) then
+        if data[1] ~= Me.Name then
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character:FindFirstChild("Head")
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui")
+	if not Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("ExploiterGui") then
+        pcall(function()Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
+        local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
+        ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
+        ExploiterGui.Name = "ExploiterGui"
+        ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+        ExploiterGui.Frame.NameSlot.Text = data[2]
+        ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
+        ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
+	if data[5] == "true" then
+	ExploiterGui.Frame.NameSlot.RichText = data[5]
 
+	end
+        if data[6] then
+            sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText))
+            end
+        end
+	end
+        end
+    end)
+    else
 sock.OnMessage:Connect(function(data)
     local data = data:split(":")
     if Players:FindFirstChild(data[1]) then
@@ -87,3 +114,4 @@ sock.OnMessage:Connect(function(data)
 	end
         end
     end)
+    end
