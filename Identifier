@@ -42,7 +42,7 @@ if table.find(AuthStrings, getgenv().PrivateKey) then
 local VerifiedGui = ExploiterGui:Clone()
 VerifiedGui.Name = "VerifiedGui"
 VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
-VerifiedGui.Frame.NameSlot.Size = Vector3.new({1, 0}, {0.170000002, 0})
+VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
 VerifiedGui.Frame.NameSlot.Text = "Original"
 end
 
@@ -65,7 +65,7 @@ Me.CharacterAdded:Connect(function()
 	local VerifiedGui = ExploiterGui:Clone()
 	VerifiedGui.Name = "VerifiedGui"
 	VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
-	VerifiedGui.Frame.NameSlot.Size = Vector3.new({1, 0}, {0.170000002, 0})
+	VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
 	VerifiedGui.Frame.NameSlot.Text = "Original"
     end
     sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().PrivateKey)..":"..tostring(getgenv().RichText))
@@ -92,7 +92,7 @@ sock.DataReceived:Connect(function(data)
 		local VerifiedGui = ExploiterGui:Clone()
 		VerifiedGui.Name = "VerifiedGui"
 		VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
-		VerifiedGui.Frame.NameSlot.Size = Vector3.new({1, 0}, {0.170000002, 0})
+		VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
 		VerifiedGui.Frame.NameSlot.Text = "Original"
     	end
 	if data[6] == "true" then
@@ -126,7 +126,7 @@ sock.OnMessage:Connect(function(data)
 		local VerifiedGui = ExploiterGui:Clone()
 		VerifiedGui.Name = "VerifiedGui"
 		VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
-		VerifiedGui.Frame.NameSlot.Size = Vector3.new({1, 0}, {0.170000002, 0})
+		VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
 		VerifiedGui.Frame.NameSlot.Text = "Original"
     	end
 	if data[6] == "true" then
