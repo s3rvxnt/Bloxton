@@ -39,6 +39,7 @@ ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
 ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
 ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
 if table.find(AuthStrings, getgenv().PrivateKey) then
+task.wait()
 local VerifiedGui = ExploiterGui:Clone()
 VerifiedGui.Parent = ExploiterGui.Parent
 VerifiedGui.Name = "VerifiedGui"
