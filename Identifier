@@ -1,3 +1,4 @@
+-----------------------------------------------
 local AuthStrings = {"3e75e249a9b6c1e39792d29efc319a4176e1aa424338ba394594b15d3e3bc9b7","9174f4abb00d8f5be79f1b7ee1bdfe651784d5771e2fad7b5b0af68a631f1741","e1a1aae2ec9c39ba32134ad8befe98ee0a31dfaac735eb29e78767956ea30ee1","bd97176919703bf0ab57b3751a1127d5fa0080e322099ccf8b35cb37b0a39145"}
 while not game:IsLoaded() do task.wait() end
 local Players = game:GetService("Players")
@@ -64,7 +65,9 @@ Me.CharacterAdded:Connect(function()
     ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
     ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
     if table.find(AuthStrings, getgenv().PrivateKey) then
+        task.wait()
 	local VerifiedGui = ExploiterGui:Clone()
+	VerifiedGui.Parent = ExploiterGui.Parent
 	VerifiedGui.Name = "VerifiedGui"
 	VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
 	VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
@@ -91,7 +94,9 @@ sock.DataReceived:Connect(function(data)
         ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
         ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
 	if table.find(AuthStrings, data[5]) then
+	    task.wait()
 		local VerifiedGui = ExploiterGui:Clone()
+		VerifiedGui.Parent = ExploiterGui.Parent
 		VerifiedGui.Name = "VerifiedGui"
 		VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
 		VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
@@ -125,7 +130,9 @@ sock.OnMessage:Connect(function(data)
         ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
         ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
 	if table.find(AuthStrings, data[5]) then
+	    task.wait()
 		local VerifiedGui = ExploiterGui:Clone()
+		VerifiedGui.Parent = ExploiterGui.Parent
 		VerifiedGui.Name = "VerifiedGui"
 		VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
 		VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
