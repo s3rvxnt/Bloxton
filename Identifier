@@ -39,15 +39,12 @@ ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
 ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
 ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
 if table.find(AuthStrings, getgenv().PrivateKey) then
-print("valid")
 local VerifiedGui = ExploiterGui:Clone()
 VerifiedGui.Parent = ExploiterGui.Parent
 VerifiedGui.Name = "VerifiedGui"
 VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
-VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
+VerifiedGui.Frame.NameSlot.Size = UDim2.new(1, 0, 0.170000002, 0)
 VerifiedGui.Frame.NameSlot.Text = "Original"
-else
-print("not valid")
 end
 
 sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().PrivateKey)..":"..tostring(getgenv().RichText)..":Joined")
