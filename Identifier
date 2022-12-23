@@ -32,7 +32,7 @@ pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destr
 local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
 ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
 ExploiterGui.Name = "ExploiterGui"
-ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+ExploiterGui.StudsOffset = Vector3.new(0,1.9,0)
 ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
 ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
 ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
@@ -48,7 +48,7 @@ Me.CharacterAdded:Connect(function()
     local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
     ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
     ExploiterGui.Name = "ExploiterGui"
-    ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+    ExploiterGui.StudsOffset = Vector3.new(0,1.9,0)
     ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
     ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
     ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
@@ -72,7 +72,7 @@ sock.DataReceived:Connect(function(data)
         local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
         ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
         ExploiterGui.Name = "ExploiterGui"
-        ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+        ExploiterGui.StudsOffset = Vector3.new(0,1.9,0)
         ExploiterGui.Frame.NameSlot.Text = data[2]
         ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
         ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
@@ -100,7 +100,7 @@ sock.OnMessage:Connect(function(data)
         local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
         ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
         ExploiterGui.Name = "ExploiterGui"
-        ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+        ExploiterGui.StudsOffset = Vector3.new(0,1.9,0)
         ExploiterGui.Frame.NameSlot.Text = data[2]
         ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
         ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
