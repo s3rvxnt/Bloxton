@@ -1,159 +1,118 @@
------------------------------------------------
-local AuthStrings = {"3e75e249a9b6c1e39792d29efc319a4176e1aa424338ba394594b15d3e3bc9b7","9174f4abb00d8f5be79f1b7ee1bdfe651784d5771e2fad7b5b0af68a631f1741","e1a1aae2ec9c39ba32134ad8befe98ee0a31dfaac735eb29e78767956ea30ee1","bd97176919703bf0ab57b3751a1127d5fa0080e322099ccf8b35cb37b0a39145"}
 while not game:IsLoaded() do task.wait() end
-   local Players = game:GetService("Players")
-   local Me = Players.LocalPlayer
-   local sock
-   if WebSocket then
-      sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
-      sock.OnClose:Connect(function()
-      sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
-      end)
-   elseif WebsocketClient then
-      sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
-      sock:Connect()
-      sock.ConnectionClosed:Connect(function()
-      sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
-      sock:Connect()
-      end)
-   else
-      sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
-      sock.OnClose:Connect(function()
-      sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
-      end)
-   end
+local Players = game:GetService("Players")
+local Me = Players.LocalPlayer
+local sock
+if WebSocket then
+sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
+sock.OnClose:Connect(function()
+sock = WebSocket.connect("wss://lol.rgsrseraeew.repl.co")
+end)
+	elseif WebsocketClient then
+sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
+sock:Connect()
+sock.ConnectionClosed:Connect(function()
+sock = WebsocketClient.new("wss://lol.rgsrseraeew.repl.co")
+sock:Connect()
+end)
+	else
+ sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
+sock.OnClose:Connect(function()
+sock = syn.websocket.connect("wss://lol.rgsrseraeew.repl.co")
+end)
+end
 
-   function stringtocolor(str)
-      return Color3.new(table.unpack(str:gsub(" ",""):split(",")))
-   end
+function stringtocolor(str)
+ return Color3.new(table.unpack(str:gsub(" ",""):split(",")))
+end
 
-   repeat task.wait() until Me.Character
-      repeat task.wait() until Me.Character:FindFirstChild("Head")
-         Me.Character.Head:WaitForChild("NameGui")
-         pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
-         local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
-         ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
-         ExploiterGui.Name = "ExploiterGui"
-         ExploiterGui.StudsOffset = Vector3.new(0, 1.9, 0)
-         ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
-         ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
-         ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
-         ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
-         if table.find(AuthStrings, getgenv().PrivateKey) then
-            task.wait()
-            local VerifiedGui = ExploiterGui:Clone()
-            VerifiedGui.Parent = ExploiterGui.Parent
-            VerifiedGui.Name = "VerifiedGui"
-            VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
-            VerifiedGui.Frame.NameSlot.Size = UDim2.new(1, 0, 0.170000002, 0)
-            VerifiedGui.Frame.NameSlot.Text = "Original"
-            VerifiedGui.Frame.NameSlot.TextColor3 = Color3.new(1,0,0)
-            VerifiedGui.Frame.NameSlot.TextStrokeColor3 = Color3.new(0,0,0)
-         end
+repeat task.wait() until Me.Character
+repeat task.wait() until Me.Character:FindFirstChild("Head")
+Me.Character.Head:WaitForChild("NameGui")
+pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
+local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
+ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
+ExploiterGui.Name = "ExploiterGui"
+ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
+ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
+ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
+ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
 
-         sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().PrivateKey)..":"..tostring(getgenv().RichText)..":Joined")
+sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText)..":Joined")
+    
+Me.CharacterAdded:Connect(function()
+    repeat task.wait() until Me.Character:FindFirstChild("Head")
+    Me.Character.Head:WaitForChild("NameGui")
+    pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
+    if not Me.Character.Head:FindFirstChild("ExploiterGui") then
+    local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
+    ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
+    ExploiterGui.Name = "ExploiterGui"
+    ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+    ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
+    ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
+    ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
+    ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
+    if getgenv().RichText == true then
 
-         Me.CharacterAdded:Connect(function()
-         repeat task.wait() until Me.Character:FindFirstChild("Head")
-            Me.Character.Head:WaitForChild("NameGui")
-            pcall(function()Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
-            if not Me.Character.Head:FindFirstChild("ExploiterGui") then
-               local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
-               ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
-               ExploiterGui.Name = "ExploiterGui"
-               ExploiterGui.StudsOffset = Vector3.new(0, 1.9, 0)
-               ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
-               ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
-               ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
-               ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
-               if table.find(AuthStrings, getgenv().PrivateKey) then
-                  task.wait()
-                  local VerifiedGui = ExploiterGui:Clone()
-                  VerifiedGui.Parent = ExploiterGui.Parent
-                  VerifiedGui.Name = "VerifiedGui"
-                  VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
-                  VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
-                  VerifiedGui.Frame.NameSlot.Text = "Original"
-                  VerifiedGui.Frame.NameSlot.TextColor3 = Color3.new(1,0,0)
-                  VerifiedGui.Frame.NameSlot.TextStrokeColor3 = Color3.new(0,0,0)
-               end
-               sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().PrivateKey)..":"..tostring(getgenv().RichText))
+    end
+    sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText))
+end
+end)
+if WebsocketClient then
+sock.DataReceived:Connect(function(data)
+    local data = data:split(":")
+    if Players:FindFirstChild(data[1]) then
+        if data[1] ~= Me.Name then
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character:FindFirstChild("Head")
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui")
+	if not Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("ExploiterGui") then
+        pcall(function()Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
+        local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
+        ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
+        ExploiterGui.Name = "ExploiterGui"
+        ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+        ExploiterGui.Frame.NameSlot.Text = data[2]
+        ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
+        ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
+	if data[5] == "true" then
+	ExploiterGui.Frame.NameSlot.RichText = data[5]
+
+	end
+        if data[6] then
+            sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText))
             end
-            end)
-            if WebsocketClient then
-               sock.DataReceived:Connect(function(data)
-               local data = data:split(":")
-               if Players:FindFirstChild(data[1]) then
-                  if data[1] ~= Me.Name then
-                     repeat task.wait() until Players:FindFirstChild(data[1]).Character
-                        repeat task.wait() until Players:FindFirstChild(data[1]).Character:FindFirstChild("Head")
-                           repeat task.wait() until Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui")
-                              if not Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("ExploiterGui") then
-                                 pcall(function()Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
-                                 local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
-                                 ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
-                                 ExploiterGui.Name = "ExploiterGui"
-                                 ExploiterGui.StudsOffset = Vector3.new(0,1.9,0)
-                                 ExploiterGui.Frame.NameSlot.Text = data[2]
-                                 ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
-                                 ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
-                                 if table.find(AuthStrings, data[5]) then
-                                    task.wait()
-                                    local VerifiedGui = ExploiterGui:Clone()
-                                    VerifiedGui.Parent = ExploiterGui.Parent
-                                    VerifiedGui.Name = "VerifiedGui"
-                                    VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
-                                    VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
-                                    VerifiedGui.Frame.NameSlot.Text = "Original"
-                                    VerifiedGui.Frame.NameSlot.TextColor3 = Color3.new(1,0,0)
-                                    VerifiedGui.Frame.NameSlot.TextStrokeColor3 = Color3.new(0,0,0)
-                                 end
-                                 if data[6] == "true" then
-                                    ExploiterGui.Frame.NameSlot.RichText = data[6]
-                                 end
-                                 if data[7] then
-                                    sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().PrivateKey)..":"..tostring(getgenv().RichText))
-                                 end
-                              end
-                           end
-                        end
-                        end)
-                     else
-                        sock.OnMessage:Connect(function(data)
-                        local data = data:split(":")
-                        if Players:FindFirstChild(data[1]) then
-                           if data[1] ~= Me.Name then
-                              repeat task.wait() until Players:FindFirstChild(data[1]).Character
-                                 repeat task.wait() until Players:FindFirstChild(data[1]).Character:FindFirstChild("Head")
-                                    repeat task.wait() until Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui")
-                                       if not Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("ExploiterGui") then
-                                          pcall(function()Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
-                                          local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
-                                          ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
-                                          ExploiterGui.Name = "ExploiterGui"
-                                          ExploiterGui.StudsOffset = Vector3.new(0,1.9,0)
-                                          ExploiterGui.Frame.NameSlot.Text = data[2]
-                                          ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
-                                          ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
-                                          if table.find(AuthStrings, data[5]) then
-                                             task.wait()
-                                             local VerifiedGui = ExploiterGui:Clone()
-                                             VerifiedGui.Parent = ExploiterGui.Parent
-                                             VerifiedGui.Name = "VerifiedGui"
-                                             VerifiedGui.StudsOffset = Vector3.new(0, 1.2, 0)
-                                             VerifiedGui.Frame.NameSlot.Size = UDim2.new({1, 0}, {0.170000002, 0})
-                                             VerifiedGui.Frame.NameSlot.Text = "Original"
-                                             VerifiedGui.Frame.NameSlot.TextColor3 = Color3.new(1,0,0)
-                                             VerifiedGui.Frame.NameSlot.TextStrokeColor3 = Color3.new(0,0,0)
-                                          end
-                                          if data[6] == "true" then
-                                             ExploiterGui.Frame.NameSlot.RichText = data[6]
-                                          end
-                                          if data[7] then
-                                             sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().PrivateKey)..":"..tostring(getgenv().RichText))
-                                          end
-                                       end
-                                    end
-                                 end
-                                 end)
-                              end
+        end
+	end
+        end
+    end)
+    else
+sock.OnMessage:Connect(function(data)
+    local data = data:split(":")
+    if Players:FindFirstChild(data[1]) then
+        if data[1] ~= Me.Name then
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character:FindFirstChild("Head")
+        repeat task.wait() until Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui")
+	if not Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("ExploiterGui") then
+        pcall(function()Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()end)
+        local ExploiterGui = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
+        ExploiterGui.Parent = Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
+        ExploiterGui.Name = "ExploiterGui"
+        ExploiterGui.StudsOffset = Vector3.new(0,1.8,0)
+        ExploiterGui.Frame.NameSlot.Text = data[2]
+        ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
+        ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
+	if data[5] == "true" then
+	ExploiterGui.Frame.NameSlot.RichText = data[5]
+
+	end
+        if data[6] then
+            sock:Send(Me.Name..":"..getgenv().MyName..":"..tostring(getgenv().MyColor)..":"..tostring(getgenv().MyStroke)..":"..tostring(getgenv().RichText))
+            end
+        end
+	end
+        end
+    end)
+    end
