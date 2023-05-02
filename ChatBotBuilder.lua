@@ -68,12 +68,13 @@ getgenv().Whitelist = {Players = {[getgenv().Main] = {Authorization = "Owner", P
 local CommandNames = {}
 getgenv().ServantCommands = {}
 getgenv().AddCommand = function(commandname,commandfunction,commandaliases,commandauth)
+   commandname = commandname:lower()
    getgenv().ServantCommands[commandname] = {
        run = commandfunction,
        authorization = commandauth
    }
    for i,v in pairs(commandaliases) do
-   CommandNames[v] = commandname
+   CommandNames[v:lower()] = commandname
    end
 end
 local CommandProcessor = function(command, speaker, arguments)
