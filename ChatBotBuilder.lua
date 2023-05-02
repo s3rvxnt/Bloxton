@@ -73,7 +73,7 @@ getgenv().AddCommand = function(commandname,commandfunction,commandaliases,comma
        authorization = commandauth
    }
    for i,v in pairs(commandaliases) do
-   CommandName[v] = commandname
+   CommandNames[v] = commandname
    end
 end
 local CommandProcessor = function(command, speaker, arguments)
