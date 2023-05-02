@@ -70,9 +70,11 @@ getgenv().ServantCommands = {}
 getgenv().AddCommand = function(commandname,commandfunction,commandaliases,commandauth)
    getgenv().ServantCommands[commandname] = {
        run = commandfunction,
-       authorization = commandauth,
-       alias = commandaliases
+       authorization = commandauth
    }
+   for i,v in pairs(commandaliases) do
+   CommandName[v] = commandname
+   end
 end
 local CommandProcessor = function(command, speaker, arguments)
     if table.find(Commands[command].authorization, Whitelist.Players[speaker].Authorization) or Whitelist.Players[speaker].Authorization == "Owner" then
