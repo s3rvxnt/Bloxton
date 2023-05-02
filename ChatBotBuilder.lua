@@ -79,7 +79,7 @@ getgenv().AddCommand = function(commandname,commandfunction,commandaliases,comma
 end
 local CommandProcessor = function(command, speaker, arguments)
     if table.find(Commands[command].authorization, Whitelist.Players[speaker].Authorization) or Whitelist.Players[speaker].Authorization == "Owner" then
-        Commands[command].run(speaker,arguments)
+        getgenv().ServantCommands[command].run(speaker,arguments)
     else
         getgenv().Message(speaker, "You do not have proper authorization to use that command.")
     end
