@@ -1,11 +1,47 @@
 --initial setup and built in functions
+getgenv().RemoveOuterQuotes = function(str)
+    local content = str:match('^"(.*)"$')
+    return content or str
+end
+
 getgenv().Message = function(Player, Message)
     local args = {
         [1] = "/w " .. Player .. " " .. Message,
         [2] = "All"
     }
-    game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-    print(Message)
+    pcall(
+        function()
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+        end
+    )
+    local name = game:GetService("Players"):FindFirstChild(Player).DisplayName
+    name = string.split(name, "")
+    local command = "/"
+    game:GetService("CoreGui").ExperienceChat.appLayout.chatInputBar.Background.Container.TextContainer.TextBoxContainer.TextBox.Text =
+        command
+    command = "/w"
+    game:GetService("CoreGui").ExperienceChat.appLayout.chatInputBar.Background.Container.TextContainer.TextBoxContainer.TextBox.Text =
+        command
+    command = "/w "
+    game:GetService("CoreGui").ExperienceChat.appLayout.chatInputBar.Background.Container.TextContainer.TextBoxContainer.TextBox.Text =
+        command
+    for i, v in name do
+        command = command .. v
+        game:GetService("CoreGui").ExperienceChat.appLayout.chatInputBar.Background.Container.TextContainer.TextBoxContainer.TextBox.Text =
+            command
+    end
+    repeat
+        task.wait()
+    until game:GetService("TextChatService").TextChannels:FindFirstChild(
+        "RBXWhisper:" ..
+            tostring(game:GetService("Players"):FindFirstChild(Player).UserId) ..
+                "_" .. tostring(game:GetService("Players").LocalPlayer.UserId)
+    )
+    game:GetService("TextChatService").TextChannels:FindFirstChild(
+        "RBXWhisper:" ..
+            tostring(game:GetService("Players"):FindFirstChild(Player).UserId) ..
+                "_" .. tostring(game:GetService("Players").LocalPlayer.UserId)
+    ):SendAsync(Message)
 end
 getgenv().CommaSplit = function(string)
     local values = {}
@@ -67,26 +103,35 @@ getgenv().Whitelist = {Players = {[getgenv().Main] = {Authorization = "Owner", P
 --commands
 local CommandNames = {}
 getgenv().ServantCommands = {}
-getgenv().AddCommand = function(commandname,commandfunction,commandaliases,commandauth)
-   commandname = commandname:lower()
-   getgenv().ServantCommands[commandname] = {
-       run = commandfunction,
-       authorization = commandauth
-   }
-   for i,v in pairs(commandaliases) do
-   CommandNames[v:lower()] = commandname
-   end
+getgenv().AddCommand = function(commandname, commandfunction, commandaliases, commandauth)
+    commandname = commandname:lower()
+    getgenv().ServantCommands[commandname] = {
+        run = commandfunction,
+        authorization = commandauth
+    }
+    for i, v in pairs(commandaliases) do
+        CommandNames[v:lower()] = commandname
+    end
 end
 local CommandProcessor = function(command, speaker, arguments)
-    if table.find(Commands[command].authorization, Whitelist.Players[speaker].Authorization) or Whitelist.Players[speaker].Authorization == "Owner" then
-        getgenv().ServantCommands[command].run(speaker,arguments)
+    if
+        table.find(getgenv().ServantCommands[command].authorization, getgenv().Whitelist.Players[speaker].Authorization) or
+            getgenv().Whitelist.Players[speaker].Authorization == "Owner"
+     then
+        getgenv().ServantCommands[command].run(speaker, arguments)
     else
+        print("no :(")
         getgenv().Message(speaker, "You do not have proper authorization to use that command.")
     end
 end
 local function chatted(player)
-        player.Chatted:Connect(function(msg)
+    player.Chatted:Connect(
+        function(msg)
             if getgenv().Whitelist.Players[player.Name] then
+                print(player.Name)
+                for i, v in getgenv().Whitelist.Players do
+                    print(i, v)
+                end
                 local commandparts = getgenv().SpaceSplit(msg)
                 local iscommand = false
                 local Command
@@ -97,45 +142,18 @@ local function chatted(player)
                     end
                 end
                 if iscommand == true then
-                        local args = ""
-                        local match = string.find(msg, "%s+")
-                        if match then
-                        local args = string.sub(msg, string.find(msg, "%s+") + 1)
-                        args =
-                            args:gsub(
-                            "(%b())",
-                            function(s)
-                                return s:gsub("%s+", "\001")
-                            end
-                        )
-                        args =
-                            args:gsub(
-                            "(%b[])",
-                            function(s)
-                                return s:gsub("%s+", "\002")
-                            end
-                        )
-                        args =
-                            args:gsub(
-                            '(%b"")',
-                            function(s)
-                                return s:gsub("%s+", "\003")
-                            end
-                        )
-                        args = args:gsub('([^%(%[%]"%s]+)%s+([^%(%[%]"%s]+)', "%1,%2")
-                        args = args:gsub("%s+", ",")
-                        args = args:gsub("\001", " ")
-                        args = args:gsub("\002", " ")
-                        args = args:gsub("\003", " ")
-                        end
-                        CommandProcessor(Command, player.Name, args)
-                        end
+                    local command, args = msg:match("^(%S+)%s*(.-)$")
+                    CommandProcessor(Command, player.Name, args)
+                end
             end
-end)
+        end
+    )
+end
+game:GetService("Players").PlayerAdded:Connect(
+    function(player)
+        chatted(player)
     end
-game:GetService("Players").PlayerAdded:Connect(function(player)
-    chatted(player)
-end)
+)
 for _, player in pairs(game:GetService("Players"):GetPlayers()) do
     chatted(player)
 end
