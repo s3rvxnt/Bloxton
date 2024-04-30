@@ -120,7 +120,6 @@ local CommandProcessor = function(command, speaker, arguments)
      then
         getgenv().ServantCommands[command].run(speaker, arguments)
     else
-        print("no :(")
         getgenv().Message(speaker, "You do not have proper authorization to use that command.")
     end
 end
@@ -128,10 +127,6 @@ local function chatted(player)
     player.Chatted:Connect(
         function(msg)
             if getgenv().Whitelist.Players[player.Name] then
-                print(player.Name)
-                for i, v in getgenv().Whitelist.Players do
-                    print(i, v)
-                end
                 local commandparts = getgenv().SpaceSplit(msg)
                 local iscommand = false
                 local Command
