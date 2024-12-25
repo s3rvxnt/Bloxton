@@ -4,21 +4,21 @@ while not game:IsLoaded() do task.wait() end
    local Me = Players.LocalPlayer
    local sock
    if WebSocket then
-      sock = WebSocket.connect("wss://lol.Leviticusz.repl.co")
+      sock = WebSocket.connect(getgenv().Server)
       sock.OnClose:Connect(function()
-      sock = WebSocket.connect("wss://lol.Leviticusz.repl.co")
+      sock = WebSocket.connect(getgenv().Server)
       end)
    elseif WebsocketClient then
-      sock = WebsocketClient.new("wss://lol.Leviticusz.repl.co")
+      sock = WebsocketClient.new(getgenv().Server)
       sock:Connect()
       sock.ConnectionClosed:Connect(function()
-      sock = WebsocketClient.new("wss://lol.Leviticusz.repl.co")
+      sock = WebsocketClient.new(getgenv().Server)
       sock:Connect()
       end)
    else
-      sock = syn.websocket.connect("wss://lol.Leviticusz.repl.co")
+      sock = syn.websocket.connect(getgenv().Server)
       sock.OnClose:Connect(function()
-      sock = syn.websocket.connect("wss://lol.Leviticusz.repl.co")
+      sock = syn.websocket.connect(getgenv().Server)
       end)
    end
 
