@@ -1,0 +1,195 @@
+while not game:IsLoaded() do
+    task.wait()
+end
+local Players = game:GetService("Players")
+local Me = Players.LocalPlayer
+local sock
+if WebSocket then
+    sock = WebSocket.connect(getgenv().Server)
+    sock.OnClose:Connect(
+        function()
+            sock = WebSocket.connect(getgenv().Server)
+        end
+    )
+elseif WebsocketClient then
+    sock = WebsocketClient.new(getgenv().Server)
+    sock:Connect()
+    sock.ConnectionClosed:Connect(
+        function()
+            sock = WebsocketClient.new(getgenv().Server)
+            sock:Connect()
+        end
+    )
+else
+    sock = syn.websocket.connect(getgenv().Server)
+    sock.OnClose:Connect(
+        function()
+            sock = syn.websocket.connect(getgenv().Server)
+        end
+    )
+end
+
+function stringtocolor(str)
+    return Color3.new(table.unpack(str:gsub(" ", ""):split(",")))
+end
+if game.PlaceId == 1990228024 then
+    repeat
+        task.wait()
+    until Me.Character
+    repeat
+        task.wait()
+    until Me.Character:FindFirstChild("Head")
+    Me.Character.Head:WaitForChild("NameGui")
+    pcall(
+        function()
+            Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()
+        end
+    )
+    local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
+    ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
+    ExploiterGui.Name = "ExploiterGui"
+    ExploiterGui.StudsOffset = Vector3.new(0, 1.9, 0)
+    ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
+    ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
+    ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
+    ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
+elseif game.PlaceId == 6764533218 then
+    local WashiezNameTag = game:GetService("Workspace"):WaitForChild("Nametags"):WaitForChild(Me.Name)
+    if not WashiezNameTag:FindFirstChild("ExploiterName") then
+        WashiezNameTag:WaitForChild("Rank").Text = getgenv().MyName
+        WashiezNameTag.Rank.TextColor3 = getgenv().MyColor
+        WashiezNameTag.Rank.TextStrokeColor3 = getgenv().MyStroke
+        WashiezNameTag.Rank.RichText = getgenv().RichText
+        WashiezNameTag.Rank.Name = "ExploiterName"
+    end
+end
+task.spawn(
+    function()
+        repeat
+            sock:Send(
+                Me.Name ..
+                    ":" ..
+                        getgenv().MyName ..
+                            ":" ..
+                                tostring(getgenv().MyColor) ..
+                                    ":" ..
+                                        tostring(getgenv().MyStroke) ..
+                                            ":" .. "random bullshit" .. ":" .. tostring(getgenv().RichText) .. ":Joined"
+            )
+            task.wait(60)
+        until false
+    end
+)
+Me.CharacterAdded:Connect(
+    function()
+        if game.PlaceId == 1990228024 then
+            repeat
+                task.wait()
+            until Me.Character:FindFirstChild("Head")
+            Me.Character.Head:WaitForChild("NameGui")
+            pcall(
+                function()
+                    Me.Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy()
+                end
+            )
+            if not Me.Character.Head:FindFirstChild("ExploiterGui") then
+                local ExploiterGui = Me.Character.Head:FindFirstChild("NameGui"):Clone()
+                ExploiterGui.Parent = Me.Character.Head:FindFirstChild("NameGui").Parent
+                ExploiterGui.Name = "ExploiterGui"
+                ExploiterGui.StudsOffset = Vector3.new(0, 1.9, 0)
+                ExploiterGui.Frame.NameSlot.Text = getgenv().MyName
+                ExploiterGui.Frame.NameSlot.TextColor3 = getgenv().MyColor
+                ExploiterGui.Frame.NameSlot.TextStrokeColor3 = getgenv().MyStroke
+                ExploiterGui.Frame.NameSlot.RichText = getgenv().RichText
+            end
+        elseif game.PlaceId == 6764533218 then
+            local WashiezNameTag = game:GetService("Workspace"):WaitForChild("Nametags"):WaitForChild(Me.Name)
+            if not WashiezNameTag:FindFirstChild("ExploiterName") then
+                WashiezNameTag:WaitForChild("Rank").Text = getgenv().MyName
+                WashiezNameTag.Rank.TextColor3 = getgenv().MyColor
+                WashiezNameTag.Rank.TextStrokeColor3 = getgenv().MyStroke
+                WashiezNameTag.Rank.RichText = getgenv().RichText
+                WashiezNameTag.Rank.Name = "ExploiterName"
+            end
+        end
+        sock:Send(
+            Me.Name ..
+                ":" ..
+                    getgenv().MyName ..
+                        ":" ..
+                            tostring(getgenv().MyColor) ..
+                                ":" ..
+                                    tostring(getgenv().MyStroke) ..
+                                        ":" .. "random bullshit" .. ":" .. tostring(getgenv().RichText)
+        )
+    end
+)
+
+local function Received(data)
+    local data = data:split(":")
+    if Players:FindFirstChild(data[1]) then
+        if data[1] ~= Me.Name then
+            if game.PlaceId == 1990228024 then
+                repeat
+                    task.wait()
+                until Players:FindFirstChild(data[1]).Character
+                repeat
+                    task.wait()
+                until Players:FindFirstChild(data[1]).Character:FindFirstChild("Head")
+                repeat
+                    task.wait()
+                until Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui")
+                if not Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("ExploiterGui") then
+                    pcall(
+                        function()
+                            Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Frame.RoleSlot:Destroy(
+
+                            )
+                        end
+                    )
+                    local ExploiterGui =
+                        Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui"):Clone()
+                    ExploiterGui.Parent =
+                        Players:FindFirstChild(data[1]).Character.Head:FindFirstChild("NameGui").Parent
+                    ExploiterGui.Name = "ExploiterGui"
+                    ExploiterGui.StudsOffset = Vector3.new(0, 1.9, 0)
+                    ExploiterGui.Frame.NameSlot.Text = data[2]
+                    ExploiterGui.Frame.NameSlot.TextColor3 = stringtocolor(data[3])
+                    ExploiterGui.Frame.NameSlot.TextStrokeColor3 = stringtocolor(data[4])
+                    if data[6] == "true" then
+                        ExploiterGui.Frame.NameSlot.RichText = data[6]
+                    end
+                end
+            elseif game.PlaceId == 6764533218 then
+                local WashiezNameTag = game:GetService("Workspace"):WaitForChild("Nametags"):WaitForChild(data[1])
+                if not WashiezNameTag:FindFirstChild("ExploiterName") then
+                    WashiezNameTag:WaitForChild("Rank").Text = data[2]
+                    WashiezNameTag.Rank.TextColor3 = stringtocolor(data[3])
+                    WashiezNameTag.Rank.TextStrokeColor3 = stringtocolor(data[4])
+                    if data[6] == "true" then
+                        WashiezNameTag.Rank.RichText = data[6]
+                    end
+                    WashiezNameTag.Rank.Name = "ExploiterName"
+                end
+            end
+            if data[7] then
+                sock:Send(
+                    Me.Name ..
+                        ":" ..
+                            getgenv().MyName ..
+                                ":" ..
+                                    tostring(getgenv().MyColor) ..
+                                        ":" ..
+                                            tostring(getgenv().MyStroke) ..
+                                                ":" .. "random bullshit" .. ":" .. tostring(getgenv().RichText)
+                )
+            end
+        end
+    end
+end
+
+if WebsocketClient then
+    sock.DataReceived:Connect(Received)
+else
+    sock.OnMessage:Connect(Received)
+end
